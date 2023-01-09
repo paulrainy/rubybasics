@@ -2,43 +2,32 @@
 
 # discriminant
 
+def eq_roots(a, b, c, d)
+  coef_sum = a + b + c
+
+  return "it's not an equation!" if coef_sum.zero? || (coef_sum == c)
+  return "ur root: x = #{c / b}" if a.zero?
+
+  if d.positive?
+    "ur roots: x1 = #{(-b + Math.sqrt(d)) / 2 * a}, x2 = #{(-b - Math.sqrt(d)) / 2 * a}"
+  elsif d.zero?
+    "ur root: x = #{-b / 2 * a}"
+  elsif d.negative?
+    'ur roots are complex!'
+  end
+end
+
 def main
   puts "let's find a discriminant!"
-  puts "input a:"
+  puts 'input a:'
   a = gets.to_f
-  puts "input b:"
+  puts 'input b:'
   b = gets.to_f
-  puts "input c:"
+  puts 'input c:'
   c = gets.to_f
-
   d = b * b - 4 * a * c
 
-  if a == 0 && b == 0 && c==0
-    puts "it's not an equation!"
-
-  elsif a == 0 && b == 0
-    puts "it's not an equation!"
-
-  elsif a == 0
-    x = c / b
-    puts "ur root: x = #{x}"
-
-  elsif d > 0
-    x1 = (-b + Math.sqrt(d)) / 2 * a
-    x2 = (-b - Math.sqrt(d)) / 2 * a
-    puts "ur roots: x1 = #{x1}, x2 = #{x2}"
-
-  elsif d == 0
-    x = -b / 2 * a
-    puts "ur root: x = #{x}"
-
-  elsif d < 0
-    puts "ur roots are complex!"
-
-  else
-    puts "impossible!"
-
-  end
+  puts eq_roots(a, b, c, d)
 end
 
 main

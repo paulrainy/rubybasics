@@ -4,13 +4,13 @@
 # my opinion: idk i dont see any logic in the task
 
 def main
-  puts "input your name:"
-  person_name = gets
-  puts "input your height:"
+  puts 'input your name:'
+  person_name = gets.chomp
+  puts 'input your height:'
   person_height = gets.to_i
   person_perfect_weight = (person_height - 110) * 1.15
 
-  if person_perfect_weight < 0
+  if person_perfect_weight.negative?
     puts "#{person_name}, your weight is already perfect!"
   else
     puts "#{person_name}, your perfect weight is #{person_perfect_weight} kg"
