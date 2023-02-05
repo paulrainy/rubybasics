@@ -2,20 +2,22 @@
 
 def input_name
   puts 'input a name of product:'
-  name = gets.to_s.chomp
-  while name.size < 2 || name.include?(' ')
+  name = gets.chomp
+  if name.size < 2
     puts 'incorrect name, please, input again'
-    name = gets.to_s.chomp
+    name = input_name
   end
+
   name
 end
 
 def input_nums
   num = gets.to_i
-  until num.positive?
+  unless num.positive?
     puts 'incorrect num, please, input again'
-    num = gets.to_i
+    num = input_nums
   end
+
   num
 end
 
@@ -30,6 +32,7 @@ def input(shop_list)
     count = input_nums
     shop_list = shop_list.merge({ name => { price => count } })
   end
+
   shop_list
 end
 

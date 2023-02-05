@@ -2,78 +2,68 @@
 
 # 3 nums
 
-def rewriting_date(num_arr, count)
-  puts 'incorrect num, input a num again'
-  num_arr[count] = nil
-  num_arr[count] = gets.to_i
-  num_arr
-end
-
-def check_correct_date(num_arr, count)
-  case count
-  when 0
-    num_arr = rewriting_date(num_arr, count) until num_arr[count] <= 31 && num_arr[count] >= 1
-  when 1
-    num_arr = rewriting_date(num_arr, count) until num_arr[count] <= 12 && num_arr[count] >= 1
-  when 2
-    num_arr = rewriting_date(num_arr, count) until num_arr[count] >= 1
+def input_day
+  puts 'input a num of days:'
+  num = gets.to_i
+  unless num.positive? && num <= 31
+    puts 'incorrect day, please, input again'
+    num = input_day
   end
-  num_arr
+
+  num
 end
 
-def spec_check(num_arr, month_hash)
-  max_days = if num_arr[1] == 2 && leap_year?(num_arr)
-               29
-             else
-               month_hash.fetch(num_arr[1])
-             end
-  while num_arr[0] > max_days
-    puts 'incorrect number of days in the month!'
-    num_arr = rewriting_date(num_arr, 0)
+def input_month
+  puts 'input a num of month:'
+  num = gets.to_i
+  unless num.positive? && num <= 12
+    puts 'incorrect month, please, input again'
+    num = input_nums
   end
-  num_arr
+
+  num
 end
 
-def fill_arr(num_arr)
-  count = 0
-  puts 'input day, month and year in each own string'
-  while num_arr.size < 3
-    num_arr << gets.to_i
-    num_arr = check_correct_date(num_arr, count)
-    count += 1
+def input_year
+  puts 'input a num of years:'
+  num = gets.to_i
+  unless num.positive?
+    puts 'incorrect year, please, input again'
+    num = input_nums
   end
-  num_arr
+
+  num
 end
 
-def leap_year?(num_arr)
-  return true if (num_arr[2] % 4).zero? && (num_arr[2] % 100).zero? && (num_arr[2] % 400).zero?
-  return true if (num_arr[2] % 4).zero? && (num_arr[2] % 100).positive?
+def leap_year?(year)
+  return true if ((year % 400).zero? || year % 100 != 0) && (year % 4).zero?
 
   false
 end
 
-def counting_day(num_arr, month_hash)
-  return num_arr[0] if num_arr[1] == 1
-
-  answer = 0
-  month_hash.each_pair do |month, days|
-    break if month == num_arr[1]
-
-    answer += days
+def spec_check(day, month_arr, month)
+  while day > month_arr[month - 1]
+    puts 'founded incorrect number of days for ur month! Lets change it!'
+    day = input_day
   end
-  answer += 1 if leap_year?(num_arr)
-  answer + num_arr[0]
+
+  day
+end
+
+def result_counting(day, month, year, month_arr)
+  result = day
+  (0..month - 2).each { |i| result += month_arr[i] }
+  puts "#{result} days of #{year} year"
 end
 
 def main
-  num_arr = []
-  month_hash = { 1 => 31, 2 => 28, 3 => 31, 4 => 30, 5 => 31, 6 => 30, 7 => 31, 8 => 30, 9 => 31, 10 => 30, 11 => 31,
-                 12 => 30 }
-  num_arr = fill_arr(num_arr)
-  num_arr = spec_check(num_arr, month_hash)
-  puts num_arr
-  puts leap_year?(num_arr)
-  puts "#{counting_day(num_arr, month_hash)} days of #{num_arr[2]} year"
+  month_arr = [31, 28, 31, 30, 31, 30, 31, 30, 31, 30, 31, 30]
+  day = input_day
+  month = input_month
+  year = input_year
+  month_arr[1] += 1 if leap_year?(year)
+  day = spec_check(day, month_arr, month)
+  result_counting(day, month, year, month_arr)
 end
 
 main

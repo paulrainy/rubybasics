@@ -3,13 +3,7 @@
 # array +5 to 100
 
 def main
-  array = []
-  num = 10
-  while array.last != 100
-    array << num
-    num += 5
-  end
-  puts array
+  puts (10..100).step(5).map(&:to_i)
 end
 
 main

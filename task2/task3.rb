@@ -4,12 +4,13 @@
 
 def main
   fib_array = [0, 1]
-  n = 0
-  while fib_array[n + 1] < 100
-    fib_array[2 + n] = fib_array[0 + n] + fib_array[1 + n]
-    n += 1
+
+  loop do
+    latest_num = fib_array.last + fib_array[-2]
+    break unless latest_num < 100
+
+    fib_array.push latest_num
   end
-  fib_array.delete_at(fib_array.size - 1)
   puts fib_array
 end
 
