@@ -2,12 +2,12 @@
 
 # 3 nums
 
-def input_day
+def input_day(month_arr, month)
   puts 'input a num of days:'
   num = gets.to_i
-  unless num.positive? && num <= 31
+  unless num.positive? && num <= month_arr[month - 1]
     puts 'incorrect day, please, input again'
-    num = input_day
+    num = input_day(month_arr, month)
   end
 
   num
@@ -18,7 +18,7 @@ def input_month
   num = gets.to_i
   unless num.positive? && num <= 12
     puts 'incorrect month, please, input again'
-    num = input_nums
+    num = input_month
   end
 
   num
@@ -29,7 +29,7 @@ def input_year
   num = gets.to_i
   unless num.positive?
     puts 'incorrect year, please, input again'
-    num = input_nums
+    num = input_year
   end
 
   num
@@ -41,15 +41,6 @@ def leap_year?(year)
   false
 end
 
-def spec_check(day, month_arr, month)
-  while day > month_arr[month - 1]
-    puts 'founded incorrect number of days for ur month! Lets change it!'
-    day = input_day
-  end
-
-  day
-end
-
 def result_counting(day, month, year, month_arr)
   result = day
   (0..month - 2).each { |i| result += month_arr[i] }
@@ -58,11 +49,10 @@ end
 
 def main
   month_arr = [31, 28, 31, 30, 31, 30, 31, 30, 31, 30, 31, 30]
-  day = input_day
-  month = input_month
   year = input_year
   month_arr[1] += 1 if leap_year?(year)
-  day = spec_check(day, month_arr, month)
+  month = input_month
+  day = input_day(month_arr, month)
   result_counting(day, month, year, month_arr)
 end
 
